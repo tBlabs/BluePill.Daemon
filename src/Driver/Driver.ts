@@ -85,7 +85,7 @@ export class Driver
             .If(ResponseFrameType.ConfigUpdate, 'type', _ => _.Get('pushMode').Get('samplingInterval'))
             .If(ResponseFrameType.Error, 'type', _ => _.Get('err'))
             .If(ResponseFrameType.Update, 'type', _ => _.Get('addr').Get4LE('value'))
-            .If(ResponseFrameType.UpdateAllSensors, 'type', _ => _
+            .If(ResponseFrameType.AllSensorsUpdate, 'type', _ => _
                 .Get4LE('input1').Get4LE('input2').Get4LE('input3').Get4LE('input4').Get4LE('input5').Get4LE('input6').Get4LE('input7')
                 .Get4LE('adc1').Get4LE('adc2').Get4LE('adc3').Get4LE('adc4')
                 .Get4LE('rtc'))
@@ -136,7 +136,7 @@ export class Driver
                 this.ConfigAsString(out);
                 break;
 
-            case ResponseFrameType.UpdateAllSensors:
+            case ResponseFrameType.AllSensorsUpdate:
                 const sensors: number[] = [out.input1, out.input2, out.input3, out.input4, out.input5, out.input6, out.input7, out.adc1, out.adc2, out.adc3, out.adc4, out.rtc];
                 sensors.forEach((value, addr) =>
                 {
@@ -262,7 +262,7 @@ export class Driver
         this.serial.Send(frame);
     }
 
-    private SetPush(enable: boolean, interval: number): void
+    public SetPush(enable: boolean, interval: number): void
     {
         console.log('TRYING TO SET PUSH');
         const frame = (new FluentBuilder())

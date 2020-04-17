@@ -49,10 +49,10 @@ There are two options to "talk" to BluePill. Via HTTP (REST API) or TCP (Socket)
 
 ### Client --> Host
 
-| Action       | Event  | Args                    | Example                      | Side effects               |
-| ------------ | ------ | ----------------------- | ---------------------------- | -------------------------- |
-| Get IO value | `get`  | addr (address of IO)    | socket.emit('get',  4)       | *none*                     |
-| Set IO value | `set`  | addr|  value (new value) | socket.emit('set', 4, 123)  | `update` to every client   |
+| Action       | Event  | Args                       | Example                      | Side effects               |
+| ------------ | ------ | -------------------------- | ---------------------------- | -------------------------- |
+| Get IO value | `get`  | `addr` (address of IO)     | socket.emit('get',  4)       | *none*                     |
+| Set IO value | `set`  | `addr`/`value` (new value) | socket.emit('set', 4, 123)   | `update` to every client   |
 
 ### Host --> Client
 

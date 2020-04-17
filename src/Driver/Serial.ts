@@ -13,7 +13,7 @@ export class Serial
         {
             if (this.serial)
             {
-                this.serial.close((error: Error) =>
+                this.serial.close((error?: Error | null) =>
                 {
                     resolve();
                 });
@@ -73,6 +73,7 @@ export class Serial
 
     public Send(data): void
     {
+        // console.log(Buffer.from(data).toString('hex'));
         if (this.isConnected)
         {
             if (this.serial !== undefined)

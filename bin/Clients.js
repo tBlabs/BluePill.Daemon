@@ -5,10 +5,10 @@ class Clients {
         this.clients = [];
     }
     Add(socket) {
-        console.log('client connected', socket.id);
+        console.log('BLUE PILL client connected', socket.id);
         this.clients.push(socket);
         socket.on('disconnect', () => {
-            console.log('client disconnected', socket.id);
+            console.log('BLUE PILL client disconnected', socket.id);
             this.Remove(socket);
         });
     }

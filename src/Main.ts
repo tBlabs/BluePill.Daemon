@@ -35,6 +35,16 @@ export class Main
             res.send('pong');
         });
 
+        server.all('/push/:enable/:interval', (req, res) =>
+        {
+            const enable: number = parseInt(req.params.enable, 10);
+            const interval: number = parseInt(req.params.interval, 10);
+
+            this._driver.SetPush(enable ? true : false, interval);
+
+            res.sendStatus(202);
+        });
+
         server.all('/iostate', (req, res) =>
         {
             const iosState = this._driver.State;
@@ -133,8 +143,8 @@ export class Main
         const port = this._config.Port;
         const serial = this._config.Serial;
 
-        httpServer.listen(port, () => this._logger.LogAlways(`SERVER STARTED @ ${ port }`));
-        this._driver.Connect(serial, () => this._logger.LogAlways(`BOARD CONNECTED @ ${ serial }`));
+        httpServer.listen(port, () => this._logger.LogAlways(`BLUE PILL SERVER STARTED @ ${ port }`));
+        this._driver.Connect(serial, () => this._logger.LogAlways(`BLUE PILL BOARD CONNECTED @ ${ serial }`));
 
 
         process.on('SIGINT', async () =>
@@ -142,9 +152,9 @@ export class Main
             clients.DisconnectAll();
 
             await this._driver.Disconnect();
-            this._logger.LogAlways(`BOARD DISCONNECTED`);
+            this._logger.LogAlways(`BLUE PILL BOARD DISCONNECTED`);
 
-            httpServer.close(() => this._logger.LogAlways(`SERVER CLOSED`));
+            httpServer.close(() => this._logger.LogAlways(`BLUE PILL SERVER CLOSED`));
         });
     }
 }

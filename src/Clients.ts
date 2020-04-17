@@ -6,13 +6,13 @@ export class Clients
 
     public Add(socket: Socket): void
     {
-        console.log('client connected', socket.id);
+        console.log('BLUE PILL client connected', socket.id);
 
         this.clients.push(socket);
 
         socket.on('disconnect', () =>
         {
-            console.log('client disconnected', socket.id);
+            console.log('BLUE PILL client disconnected', socket.id);
             this.Remove(socket);
         });
     }

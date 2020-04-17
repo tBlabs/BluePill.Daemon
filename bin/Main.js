@@ -34,6 +34,12 @@ let Main = class Main {
             this._logger.Log('PING');
             res.send('pong');
         });
+        server.all('/push/:enable/:interval', (req, res) => {
+            const enable = parseInt(req.params.enable, 10);
+            const interval = parseInt(req.params.interval, 10);
+            this._driver.SetPush(enable ? true : false, interval);
+            res.sendStatus(202);
+        });
         server.all('/iostate', (req, res) => {
             const iosState = this._driver.State;
             let state = {};
@@ -91,13 +97,13 @@ let Main = class Main {
         });
         const port = this._config.Port;
         const serial = this._config.Serial;
-        httpServer.listen(port, () => this._logger.LogAlways(`SERVER STARTED @ ${port}`));
-        this._driver.Connect(serial, () => this._logger.LogAlways(`BOARD CONNECTED @ ${serial}`));
+        httpServer.listen(port, () => this._logger.LogAlways(`BLUE PILL SERVER STARTED @ ${port}`));
+        this._driver.Connect(serial, () => this._logger.LogAlways(`BLUE PILL BOARD CONNECTED @ ${serial}`));
         process.on('SIGINT', async () => {
             clients.DisconnectAll();
             await this._driver.Disconnect();
-            this._logger.LogAlways(`BOARD DISCONNECTED`);
-            httpServer.close(() => this._logger.LogAlways(`SERVER CLOSED`));
+            this._logger.LogAlways(`BLUE PILL BOARD DISCONNECTED`);
+            httpServer.close(() => this._logger.LogAlways(`BLUE PILL SERVER CLOSED`));
         });
     }
 };

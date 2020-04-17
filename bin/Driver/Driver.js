@@ -74,7 +74,7 @@ let Driver = class Driver {
             .If(ResponseFrameType_1.ResponseFrameType.ConfigUpdate, 'type', _ => _.Get('pushMode').Get('samplingInterval'))
             .If(ResponseFrameType_1.ResponseFrameType.Error, 'type', _ => _.Get('err'))
             .If(ResponseFrameType_1.ResponseFrameType.Update, 'type', _ => _.Get('addr').Get4LE('value'))
-            .If(ResponseFrameType_1.ResponseFrameType.UpdateAllSensors, 'type', _ => _
+            .If(ResponseFrameType_1.ResponseFrameType.AllSensorsUpdate, 'type', _ => _
             .Get4LE('input1').Get4LE('input2').Get4LE('input3').Get4LE('input4').Get4LE('input5').Get4LE('input6').Get4LE('input7')
             .Get4LE('adc1').Get4LE('adc2').Get4LE('adc3').Get4LE('adc4')
             .Get4LE('rtc'))
@@ -112,7 +112,7 @@ let Driver = class Driver {
             case ResponseFrameType_1.ResponseFrameType.ConfigUpdate:
                 this.ConfigAsString(out);
                 break;
-            case ResponseFrameType_1.ResponseFrameType.UpdateAllSensors:
+            case ResponseFrameType_1.ResponseFrameType.AllSensorsUpdate:
                 const sensors = [out.input1, out.input2, out.input3, out.input4, out.input5, out.input6, out.input7, out.adc1, out.adc2, out.adc3, out.adc4, out.rtc];
                 sensors.forEach((value, addr) => {
                     this.UpdateCache(addr, value);

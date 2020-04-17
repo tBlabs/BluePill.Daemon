@@ -46,6 +46,7 @@ class Serial {
         this.onConnectionCallback = onConnectionCallback;
     }
     Send(data) {
+        // console.log(Buffer.from(data).toString('hex'));
         if (this.isConnected) {
             if (this.serial !== undefined) {
                 this.serial.write(data);
